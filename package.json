@@ -1,12 +1,12 @@
 {
-  "name": "@cuberat-js/markdown-parser",
-  "version": "1.0.0",
+  "name": "gfm-parser",
+  "version": "1.0.1",
   "description": "GitHub-flavored Markdown parser with HTML rendering, syntax highlighting, Mermaid diagrams, and footnote support",
   "type": "module",
   "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "bin": {
-    "markdown-parser": "dist/cli.js"
+    "markdown-util": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
@@ -25,7 +25,7 @@
     "converter"
   ],
   "author": "Don Owens <don@msquatch.com> (https://github.com/cuberat-js)",
-  "homepage": "https://github.com/cuberat-js/markdownjs",
+  "homepage": "https://github.com/cuberat-js/gfm-parser",
   "license": "MIT",
   "files": [
     "dist",
