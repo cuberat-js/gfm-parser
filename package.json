@@ -14,8 +14,9 @@
     "cli": "node dist/cli.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Don Owens <don@msquatch.com> (https://github.com/cuberat-js)",
+  "homepage": "https://github.com/cuberat-js/markdownjs",
+  "license": "MIT",
   "devDependencies": {
     "@types/jsdom": "^30.0.0",
     "@types/node": "^20.19.43",

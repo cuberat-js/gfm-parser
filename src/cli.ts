@@ -5,11 +5,31 @@
  */
 
 import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 import { Command } from "commander";
-import { BlockParser } from "./block-parser.js";
-import { HtmlRenderer } from "./html-renderer.js";
-import { MarkdownRenderer } from "./markdown-renderer.js";
-import { Document } from "./ast.js";
+
+import {
+  BlockParser,
+  HtmlRenderer,
+  MarkdownRenderer,
+  Document,
+} from "./index.js";
+
+// Get the directory of the current module to access package.json
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Read version from package.json
+function getVersion(): string {
+  try {
+    const packageJsonPath = path.join(__dirname, "../package.json");
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, "utf-8"));
+    return packageJson.version;
+  } catch {
+    return "unknown";
+  }
+}
 
 async function main(): Promise<void> {
   const program = new Command();
@@ -19,9 +39,8 @@ async function main(): Promise<void> {
     .description(
       "A GitHub-flavored Markdown parser that converts Markdown to AST, HTML, or Markdown",
     )
+    .version(getVersion())
     .usage("[options]");
-
-  // .version("1.0.0", "-v, --version", "Display version")
 
   program
     .option("-m, --markdown-in <path>", "Read Markdown from file")
@@ -31,9 +50,15 @@ async function main(): Promise<void> {
     .option("-d, --markdown-out <path>", "Write Markdown to file")
     .option("--css-out <path>", "Write default CSS to file")
     .option("--css-in <path>", "Read CSS from file and embed in HTML")
-    .option("--fragment", "Only render HTML content without full document structure")
+    .option(
+      "--fragment",
+      "Only render HTML content without full document structure",
+    )
     .option("--dark-mode", "Use dark mode theme when rendering HTML")
-    .option("--no-header-links", "Suppress header anchor links when rendering HTML");
+    .option(
+      "--no-header-links",
+      "Suppress header anchor links when rendering HTML",
+    );
 
   program.addHelpText(
     "after",
@@ -94,13 +119,19 @@ Description:
   try {
     // Handle CSS output independently (no input needed)
     if (options.cssOut) {
-      const cssContent = options.darkMode 
+      const cssContent = options.darkMode
         ? HtmlRenderer.getDarkModeCss()
         : HtmlRenderer.getDefaultCss();
       fs.writeFileSync(options.cssOut, cssContent);
-      
+
       // If CSS output is the only operation, we're done
-      if (!options.astOut && !options.htmlOut && !options.markdownOut && !options.markdownIn && !options.astIn) {
+      if (
+        !options.astOut &&
+        !options.htmlOut &&
+        !options.markdownOut &&
+        !options.markdownIn &&
+        !options.astIn
+      ) {
         return;
       }
     }
@@ -128,10 +159,12 @@ Description:
 
     // Render as HTML
     if (options.htmlOut) {
-      const renderer = new HtmlRenderer({ 
+      const renderer = new HtmlRenderer({
         fragmentMode: options.fragment ?? false,
         darkMode: options.darkMode ?? false,
-        customCss: options.cssIn ? fs.readFileSync(options.cssIn, 'utf-8') : undefined,
+        customCss: options.cssIn
+          ? fs.readFileSync(options.cssIn, "utf-8")
+          : undefined,
         headerLinks: options.headerLinks ?? true,
       });
       const html = await renderer.render(ast);
