@@ -1,22 +1,37 @@
 {
-  "name": "markdownjs",
+  "name": "@cuberat-js/markdown-parser",
   "version": "1.0.0",
-  "description": "GitHub-flavored Markdown parser",
+  "description": "GitHub-flavored Markdown parser with HTML rendering, syntax highlighting, Mermaid diagrams, and footnote support",
   "type": "module",
+  "types": "dist/index.d.ts",
   "main": "dist/index.js",
   "bin": {
-    "markdownjs": "dist/cli.js"
+    "markdown-parser": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "node --test",
-    "cli": "node dist/cli.js"
+    "cli": "node dist/cli.js",
+    "prepublishOnly": "npm run build && npm test"
   },
-  "keywords": [],
+  "keywords": [
+    "markdown",
+    "github-flavored-markdown",
+    "gfm",
+    "parser",
+    "html",
+    "ast",
+    "converter"
+  ],
   "author": "Don Owens <don@msquatch.com> (https://github.com/cuberat-js)",
   "homepage": "https://github.com/cuberat-js/markdownjs",
   "license": "MIT",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
     "@types/jsdom": "^30.0.0",
     "@types/node": "^20.19.43",
