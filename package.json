@@ -1,0 +1,32 @@
+{
+  "name": "markdownjs",
+  "version": "1.0.0",
+  "description": "GitHub-flavored Markdown parser",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "markdownjs": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test",
+    "cli": "node dist/cli.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jsdom": "^30.0.0",
+    "@types/node": "^20.19.43",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^12.2.0",
+    "@primer/octicons": "^19.42.0",
+    "commander": "^15.1.0",
+    "highlight.js": "^11.12.0",
+    "jsdom": "^29.1.1",
+    "mermaid": "^12.3.0"
+  }
+}
